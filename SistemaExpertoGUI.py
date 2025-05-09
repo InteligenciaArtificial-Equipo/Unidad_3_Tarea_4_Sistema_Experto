@@ -9,6 +9,10 @@ class BlackjackGUI:
         self.root.geometry("1000x800")
         self.root.configure(bg='#F5F5F5')  # Gris muy claro
         
+        # Configurar la expansión de las filas y columnas
+        self.root.columnconfigure(0, weight=1)
+        self.root.rowconfigure(0, weight=1)
+        
         # Inicializar el sistema experto
         self.sistema = BlackjackExpertSystem()
         
@@ -33,23 +37,36 @@ class BlackjackGUI:
         self.crear_interfaz()
     
     def crear_interfaz(self):
-        # Frame principal
+        # Frame principal - configurado para expandirse con la ventana
         main_frame = ttk.Frame(self.root, padding="20", style='TFrame')
         main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        
+        # Configurar la expansión de las filas y columnas del frame principal
+        for i in range(5):  # Para las 5 filas principales
+            main_frame.rowconfigure(i, weight=1)
+        main_frame.columnconfigure(0, weight=1)
+        main_frame.columnconfigure(1, weight=1)
         
         # Título
         titulo = ttk.Label(main_frame, 
                           text="Sistema Experto de Blackjack",
                           font=('Helvetica', 24, 'bold'),
-                          foreground='black')
-        titulo.grid(row=0, column=0, columnspan=2, pady=20)
+                          foreground='black',
+                          anchor="center")
+        titulo.grid(row=0, column=0, columnspan=2, pady=20, sticky=(tk.W, tk.E))
         
         # Frame para las cartas del jugador
         frame_jugador = ttk.LabelFrame(main_frame, 
                                      text="Cartas del Jugador",
                                      padding="15",
                                      style='TLabelframe')
-        frame_jugador.grid(row=1, column=0, padx=10, pady=10, sticky=(tk.W, tk.E))
+        frame_jugador.grid(row=1, column=0, padx=10, pady=10, sticky=(tk.W, tk.E, tk.N, tk.S))
+        
+        # Configurar grid en frame_jugador para responsividad
+        for i in range(2):  # Para dos filas de botones
+            frame_jugador.rowconfigure(i, weight=1)
+        for i in range(7):  # Para siete columnas de botones
+            frame_jugador.columnconfigure(i, weight=1)
         
         # Botones para las cartas del jugador
         self.crear_botones_cartas(frame_jugador, self.agregar_carta_jugador)
@@ -59,7 +76,13 @@ class BlackjackGUI:
                                     text="Carta del Dealer",
                                     padding="15",
                                     style='TLabelframe')
-        frame_dealer.grid(row=1, column=1, padx=10, pady=10, sticky=(tk.W, tk.E))
+        frame_dealer.grid(row=1, column=1, padx=10, pady=10, sticky=(tk.W, tk.E, tk.N, tk.S))
+        
+        # Configurar grid en frame_dealer para responsividad
+        for i in range(2):  # Para dos filas de botones
+            frame_dealer.rowconfigure(i, weight=1)
+        for i in range(7):  # Para siete columnas de botones
+            frame_dealer.columnconfigure(i, weight=1)
         
         # Botones para la carta del dealer
         self.crear_botones_cartas(frame_dealer, self.establecer_carta_dealer)
@@ -69,44 +92,56 @@ class BlackjackGUI:
                                        text="Cartas Seleccionadas",
                                        padding="15",
                                        style='TLabelframe')
-        frame_seleccion.grid(row=2, column=0, columnspan=2, pady=15, sticky=(tk.W, tk.E))
+        frame_seleccion.grid(row=2, column=0, columnspan=2, pady=15, sticky=(tk.W, tk.E, tk.N, tk.S))
+        
+        # Configurar grid en frame_seleccion para responsividad
+        frame_seleccion.columnconfigure(0, weight=1)
         
         self.label_cartas_jugador = ttk.Label(frame_seleccion,
                                             text="Sus cartas: ",
                                             font=('Helvetica', 12),
                                             foreground='black')
-        self.label_cartas_jugador.grid(row=0, column=0, pady=5)
+        self.label_cartas_jugador.grid(row=0, column=0, pady=5, sticky=(tk.W, tk.E))
         
         self.label_carta_dealer = ttk.Label(frame_seleccion,
                                           text="Carta del dealer: ",
                                           font=('Helvetica', 12),
                                           foreground='black')
-        self.label_carta_dealer.grid(row=1, column=0, pady=5)
+        self.label_carta_dealer.grid(row=1, column=0, pady=5, sticky=(tk.W, tk.E))
         
         # Frame para la recomendación
         frame_recomendacion = ttk.LabelFrame(main_frame,
                                            text="Recomendación",
                                            padding="15",
                                            style='TLabelframe')
-        frame_recomendacion.grid(row=3, column=0, columnspan=2, pady=15, sticky=(tk.W, tk.E))
+        frame_recomendacion.grid(row=3, column=0, columnspan=2, pady=15, sticky=(tk.W, tk.E, tk.N, tk.S))
+        
+        # Configurar grid en frame_recomendacion para responsividad
+        frame_recomendacion.columnconfigure(0, weight=1)
+        frame_recomendacion.rowconfigure(0, weight=1)
+        frame_recomendacion.rowconfigure(1, weight=1)
         
         self.label_recomendacion = ttk.Label(frame_recomendacion,
                                            text="",
                                            wraplength=900,
                                            font=('Helvetica', 12),
                                            foreground='black')
-        self.label_recomendacion.grid(row=0, column=0, pady=5)
+        self.label_recomendacion.grid(row=0, column=0, pady=5, sticky=(tk.W, tk.E))
         
         self.label_explicacion = ttk.Label(frame_recomendacion,
                                          text="",
                                          wraplength=900,
                                          font=('Helvetica', 12),
                                          foreground='black')
-        self.label_explicacion.grid(row=1, column=0, pady=5)
+        self.label_explicacion.grid(row=1, column=0, pady=5, sticky=(tk.W, tk.E))
         
         # Botones de control
         frame_control = ttk.Frame(main_frame, style='TFrame')
-        frame_control.grid(row=4, column=0, columnspan=2, pady=20)
+        frame_control.grid(row=4, column=0, columnspan=2, pady=20, sticky=(tk.W, tk.E, tk.N, tk.S))
+        
+        # Configurar grid en frame_control para responsividad
+        frame_control.columnconfigure(0, weight=1)
+        frame_control.columnconfigure(1, weight=1)
         
         # Estilo para botones
         self.style.configure('Action.TButton',
@@ -116,21 +151,20 @@ class BlackjackGUI:
         ttk.Button(frame_control,
                   text="Evaluar Mano",
                   command=self.evaluar_mano,
-                  style='Action.TButton').grid(row=0, column=0, padx=10)
+                  style='Action.TButton').grid(row=0, column=0, padx=10, sticky=(tk.W, tk.E))
         
         ttk.Button(frame_control,
                   text="Limpiar",
                   command=self.limpiar_mano,
-                  style='Action.TButton').grid(row=0, column=1, padx=10)
+                  style='Action.TButton').grid(row=0, column=1, padx=10, sticky=(tk.W, tk.E))
     
     def crear_botones_cartas(self, parent, command):
         cartas = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
         for i, carta in enumerate(cartas):
             btn = ttk.Button(parent,
                            text=carta,
-                           width=4,
                            command=lambda c=carta: command(c))
-            btn.grid(row=i//7, column=i%7, padx=3, pady=3)
+            btn.grid(row=i//7, column=i%7, padx=3, pady=3, sticky=(tk.W, tk.E, tk.N, tk.S))
             
             # Dar estilo a los botones de cartas
             if carta in ['J', 'Q', 'K']:
@@ -205,7 +239,16 @@ class BlackjackGUI:
         self.label_recomendacion.config(text="")
         self.label_explicacion.config(text="")
 
+    def actualizar_wraplength(self, event=None):
+        width = self.root.winfo_width() - 100 
+        if width > 100:  
+            self.label_recomendacion.config(wraplength=width)
+            self.label_explicacion.config(wraplength=width)
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = BlackjackGUI(root)
-    root.mainloop() 
+    
+    root.bind("<Configure>", app.actualizar_wraplength)
+    
+    root.mainloop()
