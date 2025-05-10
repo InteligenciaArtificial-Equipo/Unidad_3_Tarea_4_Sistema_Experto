@@ -99,10 +99,10 @@ class BlackjackExpertSystem:
 
     def _evaluar_mano_con_as(self, valores, valor_dealer, num_cartas):
         """Evalúa una mano que contiene un As."""
-        suma = sum(valores)
+        suma = sum(valores) - 10
         if suma > 21:
             suma -= 10
-        
+
         if num_cartas == 2:
             if suma in [2, 3]:
                 if 5 <= valor_dealer <= 6:
@@ -120,7 +120,9 @@ class BlackjackExpertSystem:
                     return 'PEDIR'
                 else:
                     return 'PLANTARSE'
-        
+            else:
+                return 'PLANTARSE'
+
         return 'PEDIR'
 
     def _evaluar_mano_normal(self, suma, valor_dealer, num_cartas):
