@@ -72,6 +72,23 @@ python3 SistemaExpertoGUI.py
 4. Hacer clic en "Evaluar Mano" para obtener la recomendación
 5. Usar "Limpiar" para evaluar una nueva mano
 
+### Ejemplo de ejecución
+
+#### Pedir
+![image](https://github.com/user-attachments/assets/4e76d978-6c5c-4277-9c2d-3d95b2de59cc)
+
+#### Plantarce
+
+![image](https://github.com/user-attachments/assets/0d79d3f2-eace-4039-a14f-290b8465421c)
+
+#### Doblar
+
+![image](https://github.com/user-attachments/assets/2c0c7beb-e7f0-4a84-b2c9-1b53d16bbacb)
+
+#### Dividir
+
+![image](https://github.com/user-attachments/assets/6dc41e63-955f-4af1-8842-1c2a2a1885c2)
+
 ## Reglas Implementadas
 
 El sistema implementa las siguientes reglas estratégicas:
